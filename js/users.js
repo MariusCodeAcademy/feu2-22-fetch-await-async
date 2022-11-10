@@ -5,6 +5,24 @@ const url = 'https://reqres.in/api/users?page=1';
 
 const usersGridEl = document.getElementById('users');
 const getUsersBtn = document.getElementById('get1');
+const sortUsersBtn = document.getElementById('sort1');
+
+let mainUsersArr = [];
+
+// 4. html virsuje saraso prideti mygtuka sortByfirstName. paspaudus isrikiuoti duomenis pagal varda. (hint: gal padetu globalus masyvas kuriame talpiname duomenis kai atsisiunciame.)
+sortUsersBtn.addEventListener('click', async () => {
+  console.log('sort');
+  // gauti masyva kuri rikiuosim
+  // gauti jau parsiusta masyva ir ji rikiuoti nesiunciant papildomos uzklausos
+  // (masyva turesim tik po to kai buvo paspaustas getUsersBtn)
+  const dataArr = await getData(url);
+  // rikiuoti
+  dataArr.sort((a, b) => a.first_name.localeCompare(b.first_name));
+
+  // atvaizduoti
+  console.log('dataArr ===', dataArr);
+  makeCardList(dataArr);
+});
 
 // 3. padaryti kad duomenys butu parsiusti mygtuko paspaudimu. Ir pakartotinai paspaudus nesidubliuotu.
 
