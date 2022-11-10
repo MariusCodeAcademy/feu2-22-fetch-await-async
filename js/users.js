@@ -2,6 +2,9 @@
 console.log('users.js');
 
 const url = 'https://reqres.in/api/users?page=1';
+
+const usersGridEl = document.getElementById('users');
+
 // 1. su funkcija pasissiusti vartotoju masyva is https://reqres.in/api/users?page=1.
 
 function getData(from) {
@@ -13,8 +16,7 @@ function getData(from) {
 
 getData(url).then((dataArr) => {
   console.log('dataArr ===', dataArr[0]);
-  const one = makeCard(dataArr[0]);
-  users.appendChild(one);
+  makeCardList(dataArr);
 });
 
 function makeCard(obj) {
@@ -30,6 +32,11 @@ function makeCard(obj) {
   divEl.append(imgEl, h3El, pEl);
   return divEl;
 }
+
+function makeCardList(arr) {
+  arr.map((uObj) => makeCard(uObj)).forEach((htmlEl) => usersGridEl.append(htmlEl));
+}
+
 /*  
 one user obj
 {
