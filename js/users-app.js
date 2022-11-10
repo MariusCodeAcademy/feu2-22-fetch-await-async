@@ -20,7 +20,9 @@ function makeList(arr, cb) {
 // 5. sugeneruoti is gautu useriu rikiuota sarasa kuriame buti tik vardas ir pavarde
 function makeCardLi(obj) {
   const liEl = document.createElement('li');
+  liEl.className = 'list-el';
   liEl.textContent = `${obj.first_name} ${obj.last_name}`;
+  liEl.addEventListener('click', () => showUser());
   return liEl;
 }
 
@@ -30,3 +32,8 @@ async function mainInit() {
 }
 
 mainInit();
+
+function showUser(userId) {
+  //
+  console.log('show user');
+}

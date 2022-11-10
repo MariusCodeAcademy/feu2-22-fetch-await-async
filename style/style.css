@@ -22,3 +22,14 @@
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
+
+.list-el {
+  border: 1px solid #333;
+  border-radius: 3px;
+  padding: 0.7em 1.5em;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.list-el:hover {
+  background-color: rgb(225, 225, 225);
+}
