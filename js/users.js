@@ -15,7 +15,8 @@ sortUsersBtn.addEventListener('click', async () => {
   // gauti masyva kuri rikiuosim
   // gauti jau parsiusta masyva ir ji rikiuoti nesiunciant papildomos uzklausos
   // (masyva turesim tik po to kai buvo paspaustas getUsersBtn)
-  const dataArr = await getData(url);
+  // pasiimam duomenis is globalaus masyvo
+  const dataArr = mainUsersArr;
   // rikiuoti
   dataArr.sort((a, b) => a.first_name.localeCompare(b.first_name));
 
@@ -34,6 +35,8 @@ getUsersBtn.addEventListener('click', async () => {
 
   const dataArr = await getData(url);
   makeCardList(dataArr);
+  // irasom duomenis i globalu masyva
+  mainUsersArr = dataArr;
 });
 
 // 1. su funkcija pasissiusti vartotoju masyva is https://reqres.in/api/users?page=1.
