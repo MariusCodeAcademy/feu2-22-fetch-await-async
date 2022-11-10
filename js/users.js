@@ -72,6 +72,14 @@ function makeCardList(arr) {
   arr.map((uObj) => makeCard(uObj)).forEach((htmlEl) => usersGridEl.append(htmlEl));
 }
 
+//
+// 5. sugeneruoti is gautu useriu rikiuota sarasa kuriame buti tik vardas ir pavarde
+function makeCardLi(obj) {
+  const liEl = document.createElement('li');
+  liEl.textContent = `${obj.first_name} ${obj.last_name}`;
+  return liEl;
+}
+
 /*  
 one user obj
 {
