@@ -10,3 +10,5 @@
 5. sugeneruoti is gautu useriu rikiuota sarasa kuriame buti tik vardas ir pavarde
 6. padalinti puslapi i 2 dalis. kaireje sarasas.
 7. paspaudus ant konkretaus userio sarase sugeneruoti jo kortele desineje puseje 
+8. nauji html ir js failai. Parsisiusti prekes is https://dummyjson.com/products . atvaizduoti juos korteliu pavidalu
+9. prideti mygtuka 'add to cart', kiekvienai prekei, ji paspaudus idedame prekes id, kieki, kaina, ir nuotrauka i cart masyva.
