@@ -1,1 +1,18 @@
 @import 'reset.css';
+
+.users {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.card--user {
+  display: grid;
+  grid-template-columns: 120px auto;
+  gap: 1rem;
+  padding: 0;
+  overflow: hidden;
+}
+.card--user img {
+  grid-row: span 2;
+}
