@@ -1,76 +1,75 @@
 'use strict';
 console.log('users.js');
 
-const url = 'https://reqres.in/api/users?page=1';
+class App {
+  url = 'https://reqres.in/api/users?page=1';
+  mainUsersArr = [];
+  el = {};
 
-const usersGridEl = document.getElementById('users');
-const getUsersBtn = document.getElementById('get1');
-const sortUsersBtn = document.getElementById('sort1');
+  constructor() {}
 
-let mainUsersArr = [];
+  initTargets() {
+    this.el.usersGridEl = document.getElementById('users');
+    this.el.getUsersBtn = document.getElementById('get1');
+    this.el.sortUsersBtn = document.getElementById('sort1');
+  }
 
-// 4. html virsuje saraso prideti mygtuka sortByfirstName. paspaudus isrikiuoti duomenis pagal varda. (hint: gal padetu globalus masyvas kuriame talpiname duomenis kai atsisiunciame.)
-sortUsersBtn.addEventListener('click', async () => {
-  console.log('sort');
-  // gauti masyva kuri rikiuosim
-  // gauti jau parsiusta masyva ir ji rikiuoti nesiunciant papildomos uzklausos
-  // (masyva turesim tik po to kai buvo paspaustas getUsersBtn)
-  // pasiimam duomenis is globalaus masyvo
-  const dataArr = mainUsersArr;
-  // rikiuoti
-  dataArr.sort((a, b) => a.first_name.localeCompare(b.first_name));
+  makeCard(obj) {
+    const divEl = document.createElement('div');
+    divEl.className = 'card card--user';
+    const imgEl = document.createElement('img');
+    imgEl.src = obj.avatar;
+    imgEl.alt = obj.email;
+    const h3El = document.createElement('h3');
+    h3El.textContent = `${obj.first_name} ${obj.last_name}`;
+    const pEl = document.createElement('p');
+    pEl.textContent = `${obj.email} (id:${obj.id})`;
+    divEl.append(imgEl, h3El, pEl);
+    return divEl;
+  }
 
-  // atvaizduoti
-  console.log('dataArr ===', dataArr);
-  makeCardList(dataArr);
-});
+  makeCardList(arr) {
+    usersGridEl.innerHTML = '';
+    arr.map((uObj) => makeCard(uObj)).forEach((htmlEl) => usersGridEl.append(htmlEl));
+  }
 
-// 3. padaryti kad duomenys butu parsiusti mygtuko paspaudimu. Ir pakartotinai paspaudus nesidubliuotu.
+  getData(from) {
+    return fetch(from)
+      .then((resp) => resp.json())
+      .then((dataInJs) => dataInJs.data)
+      .catch((err) => console.warn('klaida getData', err));
+  }
+  initEventListeners() {
+    this.el.sortUsersBtn.addEventListener('click', async () => {
+      console.log('sort');
+      // gauti masyva kuri rikiuosim
+      // gauti jau parsiusta masyva ir ji rikiuoti nesiunciant papildomos uzklausos
+      // (masyva turesim tik po to kai buvo paspaustas getUsersBtn)
+      // pasiimam duomenis is globalaus masyvo
+      const dataArr = mainUsersArr;
+      // rikiuoti
+      dataArr.sort((a, b) => a.first_name.localeCompare(b.first_name));
 
-getUsersBtn.addEventListener('click', async () => {
-  console.count('click');
-  // getData(url).then((dataArr) => {
-  //   makeCardList(dataArr);
-  // });
+      // atvaizduoti
+      console.log('dataArr ===', dataArr);
+      makeCardList(dataArr);
+    });
 
-  const dataArr = await getData(url);
-  makeCardList(dataArr);
-  // irasom duomenis i globalu masyva
-  mainUsersArr = dataArr;
-});
+    this.el.getUsersBtn.addEventListener('click', async () => {
+      console.count('click');
+      // getData(url).then((dataArr) => {
+      //   makeCardList(dataArr);
+      // });
 
-// 1. su funkcija pasissiusti vartotoju masyva is https://reqres.in/api/users?page=1.
-
-function getData(from) {
-  return fetch(from)
-    .then((resp) => resp.json())
-    .then((dataInJs) => dataInJs.data)
-    .catch((err) => console.warn('klaida getData', err));
+      const dataArr = await getData(url);
+      makeCardList(dataArr);
+      // irasom duomenis i globalu masyva
+      mainUsersArr = dataArr;
+    });
+  }
 }
 
-// getData(url).then((dataArr) => {
-//   console.log('dataArr ===', dataArr[0]);
-//   makeCardList(dataArr);
-// });
-
-function makeCard(obj) {
-  const divEl = document.createElement('div');
-  divEl.className = 'card card--user';
-  const imgEl = document.createElement('img');
-  imgEl.src = obj.avatar;
-  imgEl.alt = obj.email;
-  const h3El = document.createElement('h3');
-  h3El.textContent = `${obj.first_name} ${obj.last_name}`;
-  const pEl = document.createElement('p');
-  pEl.textContent = `${obj.email} (id:${obj.id})`;
-  divEl.append(imgEl, h3El, pEl);
-  return divEl;
-}
-
-function makeCardList(arr) {
-  usersGridEl.innerHTML = '';
-  arr.map((uObj) => makeCard(uObj)).forEach((htmlEl) => usersGridEl.append(htmlEl));
-}
+const app = new App();
 
 /*  
 one user obj
