@@ -6,7 +6,11 @@ class App {
   mainUsersArr = [];
   el = {};
 
-  constructor() {}
+  constructor() {
+    this.initTargets();
+    this.initEventListeners();
+    this.getData();
+  }
 
   initTargets() {
     this.el.usersGridEl = document.getElementById('users');
@@ -29,42 +33,34 @@ class App {
   }
 
   makeCardList(arr) {
-    usersGridEl.innerHTML = '';
-    arr.map((uObj) => makeCard(uObj)).forEach((htmlEl) => usersGridEl.append(htmlEl));
+    this.el.usersGridEl.innerHTML = '';
+    arr.map((uObj) => this.makeCard(uObj)).forEach((htmlEl) => this.el.usersGridEl.append(htmlEl));
   }
 
-  getData(from) {
-    return fetch(from)
+  getData() {
+    return fetch(this.url)
       .then((resp) => resp.json())
-      .then((dataInJs) => dataInJs.data)
+      .then((dataInJs) => (this.mainUsersArr = dataInJs.data))
       .catch((err) => console.warn('klaida getData', err));
   }
+
   initEventListeners() {
     this.el.sortUsersBtn.addEventListener('click', async () => {
       console.log('sort');
-      // gauti masyva kuri rikiuosim
-      // gauti jau parsiusta masyva ir ji rikiuoti nesiunciant papildomos uzklausos
-      // (masyva turesim tik po to kai buvo paspaustas getUsersBtn)
-      // pasiimam duomenis is globalaus masyvo
-      const dataArr = mainUsersArr;
+      const dataArr = this.mainUsersArr;
       // rikiuoti
       dataArr.sort((a, b) => a.first_name.localeCompare(b.first_name));
 
       // atvaizduoti
       console.log('dataArr ===', dataArr);
-      makeCardList(dataArr);
+      this.makeCardList(dataArr);
     });
 
     this.el.getUsersBtn.addEventListener('click', async () => {
       console.count('click');
-      // getData(url).then((dataArr) => {
-      //   makeCardList(dataArr);
-      // });
 
-      const dataArr = await getData(url);
-      makeCardList(dataArr);
-      // irasom duomenis i globalu masyva
-      mainUsersArr = dataArr;
+      // await this.getData();
+      this.makeCardList(this.mainUsersArr);
     });
   }
 }
