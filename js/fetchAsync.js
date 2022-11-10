@@ -14,6 +14,7 @@ async function getTodo() {
   try {
     const response = await fetch('https://dummyjson.com/todos111/1');
     console.log('response ===', response);
+    // jei uklausa nesekminga persoki i catch bloka rankiniu budu
     if (!response.ok) {
       throw response.statusText;
     }
