@@ -13,8 +13,8 @@ function getData(from) {
 
 getData(url).then((dataArr) => {
   console.log('dataArr ===', dataArr[0]);
-  // const one = makeCard(dataArr[0]);
-  // document.body.appendChild(one);
+  const one = makeCard(dataArr[0]);
+  users.appendChild(one);
 });
 
 function makeCard(obj) {
