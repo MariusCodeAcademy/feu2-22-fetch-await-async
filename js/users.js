@@ -4,6 +4,19 @@ console.log('users.js');
 const url = 'https://reqres.in/api/users?page=1';
 
 const usersGridEl = document.getElementById('users');
+const getUsersBtn = document.getElementById('get1');
+
+// 3. padaryti kad duomenys butu parsiusti mygtuko paspaudimu. Ir pakartotinai paspaudus nesidubliuotu.
+
+getUsersBtn.addEventListener('click', async () => {
+  console.count('click');
+  // getData(url).then((dataArr) => {
+  //   makeCardList(dataArr);
+  // });
+
+  const dataArr = await getData(url);
+  makeCardList(dataArr);
+});
 
 // 1. su funkcija pasissiusti vartotoju masyva is https://reqres.in/api/users?page=1.
 
@@ -14,10 +27,10 @@ function getData(from) {
     .catch((err) => console.warn('klaida getData', err));
 }
 
-getData(url).then((dataArr) => {
-  console.log('dataArr ===', dataArr[0]);
-  makeCardList(dataArr);
-});
+// getData(url).then((dataArr) => {
+//   console.log('dataArr ===', dataArr[0]);
+//   makeCardList(dataArr);
+// });
 
 function makeCard(obj) {
   const divEl = document.createElement('div');
@@ -34,6 +47,7 @@ function makeCard(obj) {
 }
 
 function makeCardList(arr) {
+  usersGridEl.innerHTML = '';
   arr.map((uObj) => makeCard(uObj)).forEach((htmlEl) => usersGridEl.append(htmlEl));
 }
 
